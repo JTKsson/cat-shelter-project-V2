@@ -5,7 +5,7 @@ import Link from "next/link";
 export const Logo = () => {
 	return (
 		<Link href='/'>
-			<Image src={CatLogo} height={100} width={100} alt='Logotype' />
+			<Image src={CatLogo} height={100} width={100} alt='Logo' />
 		</Link>
 	);
 };
