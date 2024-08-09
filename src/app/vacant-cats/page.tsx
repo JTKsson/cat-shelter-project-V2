@@ -1,8 +1,8 @@
-import { VacantCatsApi } from "@/API/VacantCatsApi";
+import { GetCats } from "@/API/VacantCatsApi";
 import { CatList } from "@/components/CatList/CatList";
 
 const VacantCats = async () => {
-	const { data } = await VacantCatsApi();
+	const { data } = await GetCats();
 
 	return (
 		<>
