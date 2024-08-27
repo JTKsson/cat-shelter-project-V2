@@ -18,7 +18,7 @@ export const CatList = ({ data }: Props) => {
 		} catch (error) {
 			console.error(error);
 		}
-	}, []);
+	}, [data]);
 
 	return (
 		<div className={Styles.catList}>
