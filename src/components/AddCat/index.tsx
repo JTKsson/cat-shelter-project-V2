@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
 import CatForm from "../CatForm";
-import { AddCatApi } from "@/API/VacantCatsApi";
+import { AddCatApi, UploadImage } from "@/API/VacantCatsApi";
+import { CatListItemType } from "@/types/CatTypes";
 
 const AddCat = () => {
-	const [formData, setFormData] = useState({
+	const [formData, setFormData] = useState<CatListItemType>({
 		name: "",
 		year: "",
 		desc: "",
@@ -14,14 +15,54 @@ const AddCat = () => {
 	const handleChange = (e: { target: { name: string; value: string } }) => {
 		const { name, value } = e.target;
 
-		setFormData((prevData) => ({ ...prevData, [name]: value }));
+		if (name === "image") {
+			const fileInput = e.target as HTMLInputElement;
+			const file = fileInput.files?.[0];
+
+			if (file) {
+				console.log("File selected:", file);
+				setFormData((prevData) => ({ ...prevData, [name]: file }));
+			}
+		} else {
+			setFormData((prevData) => ({ ...prevData, [name]: value }));
+		}
 	};
 
-	const handleSubmit = async () => {
-		if (formData.image) {
-			console.log("yep, there's an image here");
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		try {
+			if (formData.image) {
+				const { publicUrl, error } = await UploadImage(formData.image);
+
+				if (error) {
+					console.error("Error uploading image:", error);
+					return;
+				}
+				setFormData((prevData) => ({ ...prevData, image: publicUrl.publicUrl }));
+			}
+
+			const response = await AddCatApi(formData);
+
+			if (!response) {
+				console.error("Unexpected response from addCat:", response);
+				return;
+			}
+
+			if (response.error) {
+				console.error("Error adding cat:", response.error);
+			}
+			console.log("Cat added successfully!");
+			setFormData({
+				name: "",
+				year: "",
+				desc: "",
+				image: null,
+			});
+		} catch (error) {
+			console.error("Error:", error);
 		}
-		await AddCatApi(formData);
+		console.log({ formData });
 	};
 
 	return <CatForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />;

@@ -1,0 +1,7 @@
+{
+	"workbench.editor.customLabels.enabled": true,
+	"workbench.editor.customLabels.patterns": {
+		"*/src/**/index.tsx": "/${dirname}",
+		"*/src/**/page.tsx": "/${dirname}"
+	}
+}

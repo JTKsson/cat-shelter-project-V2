@@ -2,6 +2,7 @@
 import { CatListItemType } from "@/types/CatTypes";
 import Styles from "../CatList.module.scss";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface Props {
 	data: CatListItemType[];
@@ -29,7 +30,14 @@ export const CatList = ({ data }: Props) => {
 						<p>{cat.year}</p>
 						<p>{cat.desc}</p>
 					</section>
-					<img src={cat.image_url} alt={`image of ${cat.name}`} />
+					{cat.image_url && (
+						<Image
+							src={cat.image_url}
+							alt={`image of ${cat.name}`}
+							width={100}
+							height={50}
+						/>
+					)}
 				</div>
 			))}
 		</div>

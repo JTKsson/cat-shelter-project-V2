@@ -1,13 +1,11 @@
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
-
 export interface CatListItemType {
 	id?: string;
 	name: string;
 	year: string;
 	desc: string;
+	image?: File | null | any;
 	image_url?: string;
 	created_at?: string;
-	// data: Json;
 }
 export interface Database {
 	public: {
