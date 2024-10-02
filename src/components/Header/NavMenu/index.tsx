@@ -18,6 +18,12 @@ const navItems = {
 	"/contact": {
 		name: "Contact",
 	},
+	"/login": {
+		name: "Login",
+	},
+	"/admin": {
+		name: "Admin Page",
+	},
 };
 
 export const NavMenu = () => {

@@ -2,11 +2,14 @@
 import { GetCats } from "@/API/VacantCatsApi";
 import AddCat from "@/components/AddCat";
 import { CatList } from "@/components/CatList/CatList";
+import { SignOutButton } from "@/components/SignOutButton";
 import { CatListItemType } from "@/types/CatTypes";
+import { useUser } from "@/utils/user/hooks";
 import { useEffect, useState } from "react";
 
 const VacantCats = () => {
 	const [cats, setCats] = useState<CatListItemType[]>([]);
+	const { user, error } = useUser();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -23,13 +26,14 @@ const VacantCats = () => {
 			}
 		};
 		fetchData();
-	}, [cats]);
+	}, []);
 
 	return (
 		<>
 			<h1>Vacant Cats</h1>
+			<SignOutButton />
 			<CatList data={cats ?? []} />
-			<AddCat />
+			{user && <AddCat />}
 		</>
 	);
 };
