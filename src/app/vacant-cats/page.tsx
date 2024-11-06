@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 const VacantCats = () => {
 	const [cats, setCats] = useState<CatListItemType[]>([]);
-	const { user, error } = useUser();
+	const { user } = useUser();
 
 	useEffect(() => {
 		const fetchData = async () => {

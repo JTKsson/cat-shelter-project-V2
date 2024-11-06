@@ -55,3 +55,11 @@ export const AddCatApi = async ({ name, year, desc, image }: CatListItemType) =>
 		}
 	}
 };
+
+export const DeleteCatApi = async (id: string | undefined) => {
+	const { error } = await supabase.from("cats").delete().eq("id", id);
+
+	if (error) {
+		console.error("Error deleting cat:", error);
+	}
+};

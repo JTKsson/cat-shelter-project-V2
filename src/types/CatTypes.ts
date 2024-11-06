@@ -1,5 +1,5 @@
 export interface CatListItemType {
-	id?: string;
+	id?: string | undefined;
 	name: string;
 	year: string;
 	desc: string;
