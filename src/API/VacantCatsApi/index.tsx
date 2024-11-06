@@ -31,6 +31,29 @@ export const UploadImage = async (file: File) => {
 	};
 };
 
+export const DeleteImage = async (fileUrl: string | undefined) => {
+	try {
+		if (fileUrl) {
+			const fileUrlSplit = fileUrl?.split("/");
+			const fileName = fileUrlSplit[fileUrlSplit.length - 1];
+
+			console.log("from api:", fileName);
+			const { data, error } = await supabase.storage.from("catImages").remove([fileName]);
+
+			if (error) {
+				console.error("Error deleting file:", error.message);
+				return { success: false, error };
+			} else {
+				console.log("File deleted successfully:", data);
+				return { success: true, data };
+			}
+		}
+	} catch (error) {
+		console.error("Unexpected error:", error);
+		return { success: false, error };
+	}
+};
+
 export const AddCatApi = async ({ name, year, desc, image }: CatListItemType) => {
 	let imageUrl: string | undefined;
 

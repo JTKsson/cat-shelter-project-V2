@@ -34,7 +34,7 @@ export const CatList = ({ data }: Props) => {
 						<h2>{cat.name}</h2>
 						<p>{cat.year}</p>
 						<p>{cat.desc}</p>
-						<DeleteCat id={cat.id} onDelete={handleDelete} />
+						<DeleteCat id={cat.id} onDelete={handleDelete} imageUrl={cat.image_url} />
 					</section>
 					{cat.image_url && (
 						<Image
