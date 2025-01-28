@@ -32,16 +32,6 @@ const AddCat = () => {
 		e.preventDefault();
 
 		try {
-			if (formData.image) {
-				const { publicUrl, error } = await UploadImage(formData.image);
-
-				if (error) {
-					console.error("Error uploading image:", error);
-					return;
-				}
-				setFormData((prevData) => ({ ...prevData, image: publicUrl.publicUrl }));
-			}
-
 			const response = await AddCatApi(formData);
 
 			if (!response) {
@@ -51,17 +41,19 @@ const AddCat = () => {
 
 			if (response.error) {
 				console.error("Error adding cat:", response.error);
+			} else {
+				console.log("Cat added successfully!");
+				setFormData({
+					name: "",
+					year: "",
+					desc: "",
+					image: null,
+				});
 			}
-			console.log("Cat added successfully!");
-			setFormData({
-				name: "",
-				year: "",
-				desc: "",
-				image: null,
-			});
 		} catch (error) {
 			console.error("Error:", error);
 		}
+
 		console.log({ formData });
 	};
 

@@ -72,22 +72,26 @@ export const AddCatApi = async ({ name, year, desc, image }: CatListItemType) =>
 	if (image) {
 		const { publicUrl, error } = await UploadImage(image);
 
-		if (!error) {
-			imageUrl = publicUrl.publicUrl;
-		}
-
-		try {
-			const { error } = await supabase.from("cats").insert({
-				name: name,
-				year: year,
-				desc: desc,
-				image_url: imageUrl,
-			});
-
+		if (error) {
+			console.error("Error uploading image:", error);
 			return { error };
-		} catch (error) {
-			console.error(error);
 		}
+
+		imageUrl = publicUrl.publicUrl;
+	}
+
+	try {
+		const { error } = await supabase.from("cats").insert({
+			name: name,
+			year: year,
+			desc: desc,
+			image_url: imageUrl,
+		});
+
+		return { error };
+	} catch (error) {
+		console.error(error);
+		return { error };
 	}
 };
 
